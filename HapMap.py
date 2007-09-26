@@ -29,7 +29,7 @@ def trios_phase(genotypes, pedinfo, haplotypes):
     haplotype_name = haplotypes.split('/')
     haplotype_name = haplotype_name[len(haplotype_name)-1]
     haplotype_obj = open(haplotypes, 'wb')
-    haplotype_file = gzip.open(haplotype_name, 'wb', fileobj = haplotype_obj)
+    haplotype_file = gzip.GzipFile(haplotype_name, 'wb', fileobj = haplotype_obj)
     genotype_file = gzip.open(genotypes, 'rb')
     inconsistent_count = dict()
     for line in genotype_file:
@@ -77,7 +77,7 @@ def trios_filter(haplotypes, filtered, filter = [0.8, 0.8, 0.05]):
     filtered_name = filtered.split('/')
     filtered_name = filtered_name[len(filtered_name)-1]
     filtered_obj = open(filtered, 'wb')
-    filtered_file = gzip.open(filtered_name, 'wb', fileobj = filtered_obj)
+    filtered_file = gzip.GzipFile(filtered_name, 'wb', fileobj = filtered_obj)
     haplotype_file = gzip.open(haplotypes, 'rb')
     for line in haplotype_file:
         buffer = line
@@ -108,7 +108,7 @@ def trios_sort(haplotypes, sorted):
     sorted_name = sorted.split('/')
     sorted_name = sorted_name[len(sorted_name)-1]
     sorted_obj = open(sorted, 'wb')
-    sorted_file = gzip.open(sorted_name, 'wb', fileobj = sorted_obj)
+    sorted_file = gzip.GzipFile(sorted_name, 'wb', fileobj = sorted_obj)
     haplotype_file = gzip.open(haplotypes, 'rb')
     lines = haplotype_file.readlines()
     positions = list()
@@ -185,6 +185,8 @@ def convert_format_to_phase(samples, output):
         output_file.write('#' + str(i+1) + '\n')
         output_file.write(' ' + haplotypes[2*i] + '\n')
         output_file.write(' ' + haplotypes[2*i+1] + '\n')
+    output_file.close()
+    sample_file.close()
 
 # convert samples file to HPM2 format
 def convert_format_to_hpm2(samples, output):
@@ -214,6 +216,8 @@ def convert_format_to_hpm2(samples, output):
     for i in range(0, sample_num):
         output_file.write(haplotypes[2*i] + '\n')
         output_file.write(haplotypes[2*i+1] + '\n')
+    output_file.close()
+    sample_file.close()
 
 #read HapMap data to Genotype class
 def read_hapmap(filename):
@@ -231,6 +235,7 @@ def read_hapmap(filename):
                 raise RuntimeWarning, 'Inconsistent sample number!' + ' ' + sample_num
             for i in range(0, sample_num):
                 genos[i].append([line[2*i+3][0], line[2*i+3][1]], int(line[2*i+4]))
+    source_file.close()
     return genos
 
 #read PHASE format data to Genotype class
@@ -248,6 +253,7 @@ def read_phase(filename):
         genos[i].haplos[0] = list(lines[3*i+1].strip().replace(' ', '').replace('?', 'N'))
         genos[i].haplos[1] = list(lines[3*i+2].strip().replace(' ', '').replace('?', 'N'))
         genos[i].status = [1 for j in range(0, snp_num)]
+    source_file.close()
     return genos
 
 #read HPM2 format data to Genotype class
@@ -273,4 +279,5 @@ def read_hpm2(filename):
         genos[i].haplos[0] = lines[2*i]
         genos[i].haplos[1] = lines[2*i+1]
         genos[i].status = [1 for j in range(0, snp_num)]
+    source_file.close()
     return genos
