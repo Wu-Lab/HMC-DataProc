@@ -40,13 +40,12 @@ def trios_phase(genotypes, pedinfo, haplotypes):
         phased_num = 0
         for cid, fid, mid in trios_id:
             child, father, mother = line[cid], line[fid], line[mid]
-            haplos = [child, 'NN']
-            phased = [0, 0]
             try:
                 haplos, phased = Genotype.trios_phase(child, father, mother)
             except RuntimeWarning, w:
                 #print w.message
                 #print cid, fid, mid, headline[cid], headline[fid], headline[mid]
+                haplos, phased = [child, 'NN'], [0, 0]
                 if inconsistent_count.has_key((headline[cid], headline[fid], headline[mid])):
                     inconsistent_count[(headline[cid], headline[fid], headline[mid])] += 1
                 else:
