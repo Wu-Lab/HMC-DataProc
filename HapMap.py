@@ -40,6 +40,8 @@ def trios_phase(genotypes, pedinfo, haplotypes):
         phased_num = 0
         for cid, fid, mid in trios_id:
             child, father, mother = line[cid], line[fid], line[mid]
+            haplos = [child, 'NN']
+            phased = [0, 0]
             try:
                 haplos, phased = Genotype.trios_phase(child, father, mother)
             except RuntimeWarning, w:
