@@ -234,6 +234,7 @@ def compare(genos_real, genos_infer, masks = None):
                 comp_sum[k][j] += comp[k][j]
     comparison = dict()
     for k in ['SE', 'IGP', 'IHP']:
+        comparison[k + 'raw'] = comp_sum[k]
         if comp_sum[k][1] > 0:
             comparison[k] = float(comp_sum[k][0]) / comp_sum[k][1]
         else:

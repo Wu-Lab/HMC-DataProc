@@ -33,15 +33,19 @@ for chr in chromosomes:
             print source
             data_name = source[len(real_dir):len(source)-4]
             infer_file = infer_dir + data_name + '.out.1.inp'
+            if os.access(infer_file, os.F_OK) == False:
+                continue
             genos_real = HapMap.read_hapmap(source)
             genos_infer = HapMap.read_phase(infer_file)
             comp = Genotype.compare(genos_real, genos_infer)
             result = data_name + ' ' + 'chr' + chr + ' ' + pop
             result += ' ' + data_name.split('_')[3]
             result += ' ' + data_name.split('_')[4]
-            result += ' ' + str(comp['SE'])
-            result += ' ' + str(comp['IGP'])
-            result += ' ' + str(comp['IHP'])
+            for k in ['SE', 'IGP', 'IHP']:
+                result += ' ' + str(comp[k])
+            for k in ['SE', 'IGP', 'IHP']:
+                result += ' ' + str(comp[k + 'raw'][0])
+                result += ' ' + str(comp[k + 'raw'][1])
             compare_file.write(result + '\n')
 
 for chr in chromosomes:
@@ -57,13 +61,17 @@ for chr in chromosomes:
             print source
             data_name = source[len(real_dir):len(source)-4]
             infer_file = infer_dir + data_name + '.out.1.hpm2'
+            if os.access(infer_file, os.F_OK) == False:
+                continue
             genos_real = HapMap.read_hapmap(source)
             genos_infer = HapMap.read_hpm2(infer_file)
             comp = Genotype.compare(genos_real, genos_infer)
             result = data_name + ' ' + 'chr' + chr + ' ' + pop
             result += ' ' + data_name.split('_')[3]
             result += ' ' + data_name.split('_')[4]
-            result += ' ' + str(comp['SE'])
-            result += ' ' + str(comp['IGP'])
-            result += ' ' + str(comp['IHP'])
+            for k in ['SE', 'IGP', 'IHP']:
+                result += ' ' + str(comp[k])
+            for k in ['SE', 'IGP', 'IHP']:
+                result += ' ' + str(comp[k + 'raw'][0])
+                result += ' ' + str(comp[k + 'raw'][1])
             compare_file.write(result + '\n')
