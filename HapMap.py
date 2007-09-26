@@ -23,10 +23,14 @@ def trios_phase(genotypes, pedinfo, haplotypes):
             father = samples[(child[0], child[2])]
             mother = samples[(child[0], child[3])]
             trios.append([child[6], father[6], mother[6]])
+    pedinfo_file.close()
     
     # parse genotypes data
+    haplotype_name = haplotypes.split('/')
+    haplotype_name = haplotype_name[len(haplotype_name)-1]
+    haplotype_obj = open(haplotypes, 'wb')
+    haplotype_file = gzip.open(haplotype_name, 'wb', fileobj = haplotype_obj)
     genotype_file = gzip.open(genotypes, 'rb')
-    haplotype_file = gzip.open(haplotypes, 'wb')
     inconsistent_count = dict()
     for line in genotype_file:
         line = line.split()
@@ -55,6 +59,9 @@ def trios_phase(genotypes, pedinfo, haplotypes):
             phased_num += phased[0] + phased[1]
         buffer = line[2] + ' ' + line[3] + ' ' + str(phased_num) + ' ' + buffer
         haplotype_file.write(buffer + '\n')
+    genotype_file.close()
+    haplotype_file.close()
+    haplotype_obj.close()
 
     for child, father, mother in trios:
         if inconsistent_count.has_key((child, father, mother)):
@@ -67,8 +74,11 @@ def trios_filter(haplotypes, filtered, filter = [0.8, 0.8, 0.05]):
             filter[i] = 1
         elif filter[i] < 0:
             filter[i] = 0
+    filtered_name = filtered.split('/')
+    filtered_name = filtered_name[len(filtered_name)-1]
+    filtered_obj = open(filtered, 'wb')
+    filtered_file = gzip.open(filtered_name, 'wb', fileobj = filtered_obj)
     haplotype_file = gzip.open(haplotypes, 'rb')
-    filtered_file = gzip.open(filtered, 'wb')
     for line in haplotype_file:
         buffer = line
         line = line.split()
@@ -89,11 +99,17 @@ def trios_filter(haplotypes, filtered, filter = [0.8, 0.8, 0.05]):
         if line[2] >= threshold[0] and missing >= filter[1] and \
                 len(alleles) >= 2 and min(alleles.values()) >= filter[2]:
             filtered_file.write(buffer)
+    haplotype_file.close()
+    filtered_file.close()
+    filtered_obj.close()
 
 # sort trios data by position
 def trios_sort(haplotypes, sorted):
+    sorted_name = sorted.split('/')
+    sorted_name = sorted_name[len(sorted_name)-1]
+    sorted_obj = open(sorted, 'wb')
+    sorted_file = gzip.open(sorted_name, 'wb', fileobj = sorted_obj)
     haplotype_file = gzip.open(haplotypes, 'rb')
-    sorted_file = gzip.open(sorted, 'wb')
     lines = haplotype_file.readlines()
     positions = list()
     map_id = dict()
@@ -105,6 +121,9 @@ def trios_sort(haplotypes, sorted):
     positions.sort()
     for i in range(0, len(lines)):
         sorted_file.write(lines[map_id[positions[i]]])
+    haplotype_file.close()
+    sorted_file.close()
+    sorted_obj.close()
 
 # select samples
 def select_samples(haplotypes, prefix, start, length):
@@ -128,6 +147,8 @@ def select_samples(haplotypes, prefix, start, length):
     print filename
     sample_file = open(filename, 'w')
     sample_file.writelines(samples)
+    sample_file.close()
+    haplotype_file.close()
     if len(samples) == length:
         return (start + length)
     else:
