@@ -1,0 +1,81 @@
+NN NN NN  ==>  NN 0 NN 0
+NN NN AA  ==>  NA 1 NA 1
+NN NN BB  ==>  NB 1 NB 1
+NN NN AB  ==>  NN 0 NN 0
+NN AA NN  ==>  AN 1 AN 1
+NN AA AA  ==>  AA 1 AA 1
+NN AA BB  ==>  AB 1 AB 1
+NN AA AB  ==>  AN 1 AN 1
+NN BB NN  ==>  BN 1 BN 1
+NN BB AA  ==>  BA 1 BA 1
+NN BB BB  ==>  BB 1 BB 1
+NN BB AB  ==>  BN 1 BN 1
+NN AB NN  ==>  NN 0 NN 0
+NN AB AA  ==>  NA 1 NA 1
+NN AB BB  ==>  NB 1 NB 1
+NN AB AB  ==>  NN 0 NN 0
+
+AA NN NN  ==>  AA 1 NN 0
+AA NN AA  ==>  AA 1 NA 1
+Inconsistent trios! AA NN BB
+AA NN BB  ==>  NN 0 NN 0
+AA NN AB  ==>  AA 1 NB 1
+AA AA NN  ==>  AA 1 AN 1
+AA AA AA  ==>  AA 1 AA 1
+Inconsistent trios! AA AA BB
+AA AA BB  ==>  NN 0 NN 0
+AA AA AB  ==>  AA 1 AB 1
+Inconsistent trios! AA BB NN
+AA BB NN  ==>  NN 0 NN 0
+Inconsistent trios! AA BB AA
+AA BB AA  ==>  NN 0 NN 0
+Inconsistent trios! AA BB BB
+AA BB BB  ==>  NN 0 NN 0
+Inconsistent trios! AA BB AB
+AA BB AB  ==>  NN 0 NN 0
+AA AB NN  ==>  AA 1 BN 1
+AA AB AA  ==>  AA 1 BA 1
+Inconsistent trios! AA AB BB
+AA AB BB  ==>  NN 0 NN 0
+AA AB AB  ==>  AA 1 BB 1
+BB NN NN  ==>  BB 1 NN 0
+Inconsistent trios! BB NN AA
+BB NN AA  ==>  NN 0 NN 0
+BB NN BB  ==>  BB 1 NB 1
+BB NN AB  ==>  BB 1 NA 1
+Inconsistent trios! BB AA NN
+BB AA NN  ==>  NN 0 NN 0
+Inconsistent trios! BB AA AA
+BB AA AA  ==>  NN 0 NN 0
+Inconsistent trios! BB AA BB
+BB AA BB  ==>  NN 0 NN 0
+Inconsistent trios! BB AA AB
+BB AA AB  ==>  NN 0 NN 0
+BB BB NN  ==>  BB 1 BN 1
+Inconsistent trios! BB BB AA
+BB BB AA  ==>  NN 0 NN 0
+BB BB BB  ==>  BB 1 BB 1
+BB BB AB  ==>  BB 1 BA 1
+BB AB NN  ==>  BB 1 AN 1
+Inconsistent trios! BB AB AA
+BB AB AA  ==>  NN 0 NN 0
+BB AB BB  ==>  BB 1 AB 1
+BB AB AB  ==>  BB 1 AA 1
+AB NN NN  ==>  AB 0 NN 0
+AB NN AA  ==>  BA 1 NA 1
+AB NN BB  ==>  AB 1 NB 1
+AB NN AB  ==>  AB 0 NN 0
+AB AA NN  ==>  AB 1 AN 1
+Inconsistent trios! AB AA AA
+AB AA AA  ==>  NN 0 NN 0
+AB AA BB  ==>  AB 1 AB 1
+AB AA AB  ==>  AB 1 AA 1
+AB BB NN  ==>  BA 1 BN 1
+AB BB AA  ==>  BA 1 BA 1
+Inconsistent trios! AB BB BB
+AB BB BB  ==>  NN 0 NN 0
+AB BB AB  ==>  BA 1 BB 1
+AB AB NN  ==>  AB 0 NN 0
+AB AB AA  ==>  BA 1 AA 1
+AB AB BB  ==>  AB 1 BB 1
+AB AB AB  ==>  AB 0 NN 0
