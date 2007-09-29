@@ -84,20 +84,21 @@ def trios_filter(haplotypes, filtered, filter = [0.8, 0.8, 0.05]):
         line = line.split()
         for i in [1, 2] + range(4, len(line), 2):
             line[i] = int(line[i])
+        num = (len(line) - 3) / 2
+        phased = line[2]
+        non_missing = num*2
         alleles = dict()
-        missing = 0
         for i in range(3, len(line), 2):
             for j in [0, 1]:
                 if line[i][j] == 'N':
-                    missing += 1
+                    non_missing -= 1
                 elif alleles.has_key(line[i][j]):
                     alleles[line[i][j]] += 1
                 else:
                     alleles[line[i][j]] = 1
-        num = (len(line) - 3) / 2
         threshold = [int(filter[0]*num), int(filter[1]*num*2), int(filter[2]*num*2)]
-        if line[2] >= threshold[0] and missing >= filter[1] and \
-                len(alleles) >= 2 and min(alleles.values()) >= filter[2]:
+        if phased >= threshold[0] and non_missing >= threshold[1] and \
+                len(alleles) >= 2 and min(alleles.values()) >= threshold[2]:
             filtered_file.write(buffer)
     haplotype_file.close()
     filtered_file.close()
