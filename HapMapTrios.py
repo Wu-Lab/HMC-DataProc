@@ -45,7 +45,7 @@ for chr in chromosomes:
             for size in sample_sizes:
                 dest_dir = sample_dir + str(size) + '/'
                 if os.access(dest_dir, os.F_OK) == False:
-                    os.mkdirs(dest_dir)
+                    os.makedirs(dest_dir)
                 samples = dest_dir + 'hapmap_chr' + chr + '_' + pop
                 start = 0
                 while(start >= 0):
