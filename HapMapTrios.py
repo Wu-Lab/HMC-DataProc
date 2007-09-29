@@ -6,6 +6,7 @@
 # output files are PHASE format files
 
 # used python packages
+import os
 import HapMap
 
 op = dict()
