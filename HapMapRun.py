@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import os
+import time
+import popen2
 import shutil
 import glob
 import HapMap
@@ -68,13 +70,14 @@ for method in params.keys():
                         else:
                             cmdline = p['command'] + ' ' + source
                         message = open(msg_file, 'w')
+                        begin_time = time.clock()
                         try:
-                            begin_time = clock()
-                            pipe = os.popen(cmdline)
-                            end_time = clock()
+                            pipe = popen2.Popen4(cmdline)
+                            pipe.wait()
                         finally:
+                            end_time = clock()
                             message.write(str(end_time-begin_time) + '\n')
-                            message.writelines(pipe.readlines())
+                            message.writelines(pipe.fromchild.readlines())
                             message.close()
                         if not(p['temp'] is None):
                             temp = p['temp'](source, input_dir)
