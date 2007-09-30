@@ -221,11 +221,21 @@ def convert_format_to_phase(samples, output):
             elif sample_num != (len(line) - 3) / 2:
                 raise RuntimeWarning, 'Inconsistent sample number!' + ' ' + sample_num
             positions += line[1] + ' '
-            allele_types += 'S'
+            alleles = dict()
             for i in range(0, sample_num):
-                haplotypes[2*i] += line[2*i+3][0]
-                haplotypes[2*i+1] += line[2*i+3][1]
+                for j in [0, 1]:
+                    a = line[2*i+3][j]
+                    haplotypes[2*i+j] += a
+                    if a != 'N':
+                        if alleles.has_key(a):
+                            alleles[a] += 1
+                        else:
+                            alleles[a] = 1
                 phase_status[i] += line[2*i+4]
+            if len(alleles) <= 2:
+                allele_types += 'S'
+            else:
+                raise RuntimeError, 'Not bi-allelic SNP site!'
     output_file.write(str(sample_num) + '\n')
     output_file.write(str(snp_num) + '\n')
     output_file.write(positions + '\n')
