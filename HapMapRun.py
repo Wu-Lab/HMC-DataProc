@@ -2,7 +2,6 @@
 
 import os
 import time
-import popen2
 import shutil
 import glob
 import HapMap
@@ -27,7 +26,7 @@ params['HMC']['suffix'] = '.inp'
 params['HMC']['temp'] = get_HMC_output
 
 params['haplorec']['enable'] = True
-params['haplorec']['command'] = 'java -Xmx1024m -Xms128m -jar HaploRec.jar'
+params['haplorec']['command'] = 'java -Xmx1024m -Xms128m -jar HaploRec.jar -n 1'
 params['haplorec']['output'] = 'haplorec_1'
 params['haplorec']['suffix'] = '.hpm2'
 params['haplorec']['temp'] = get_haplorec_output
@@ -72,12 +71,13 @@ for method in params.keys():
                         message = open(msg_file, 'w')
                         begin_time = time.clock()
                         try:
-                            pipe = popen2.Popen4(cmdline)
-                            pipe.wait()
+                            pipe = os.popen(cmdline)
+                            output = pipe.readlines()
+                            pipe.close()
                         finally:
                             end_time = time.clock()
                             message.write(str(end_time-begin_time) + '\n')
-                            message.writelines(pipe.fromchild.readlines())
+                            message.writelines(output)
                             message.close()
                         if not(p['temp'] is None):
                             temp = p['temp'](source, input_dir)
