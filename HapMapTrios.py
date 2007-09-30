@@ -43,10 +43,10 @@ for chr in chromosomes:
             HapMap.trios_sort(filtered, sorted)
         if op['sample']:
             for size in sample_sizes:
-                dest_dir = sample_dir + str(size) + '/'
+                dest_dir = sample_dir + str(size) + '/' + pop_dir + 'chr' + chr + '/'
                 if os.access(dest_dir, os.F_OK) == False:
                     os.makedirs(dest_dir)
-                samples = dest_dir + 'hapmap_chr' + chr + '_' + pop
+                prefix = dest_dir + 'hapmap_chr' + chr + '_' + pop
                 start = 0
                 while(start >= 0):
-                    start = HapMap.select_samples(sorted, samples, start, 100)
+                    start = HapMap.select_samples(sorted, prefix, start, size)
