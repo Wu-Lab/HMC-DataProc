@@ -47,6 +47,4 @@ for chr in chromosomes:
                 if os.access(dest_dir, os.F_OK) == False:
                     os.makedirs(dest_dir)
                 prefix = dest_dir + 'hapmap_chr' + chr + '_' + pop
-                start = 0
-                while(start >= 0):
-                    start = HapMap.select_samples(sorted, prefix, start, size)
+                HapMap.trios_samples(sorted, prefix, size)

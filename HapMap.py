@@ -125,6 +125,32 @@ def trios_sort(haplotypes, sorted):
     haplotype_file.close()
     sorted_file.close()
     sorted_obj.close()
+    
+# split trios data to small samples
+def trios_samples(haplotypes, prefix, length):
+    if length < 1:
+        raise RuntimeError, 'Error length argument in trios_samples!'
+    haplotype_file = gzip.open(haplotypes, 'rb')
+    samples = list()
+    line_count = 0
+    for line in haplotype_file:
+        line_count += 1
+        if line_count < length:
+            samples.append(line)
+        else:
+            first_pos = int(samples[0].split()[1])
+            last_pos = int(samples[len(samples)-1].split()[1])
+            spacing = int((last_pos - first_pos) / len(samples))
+            filename = prefix + '_' + str(len(samples)) + '_' + str(spacing) + '_' + \
+                    str(first_pos) + '_' + str(last_pos) + '.txt'
+            print filename
+            sample_file = open(filename, 'w')
+            sample_file.writelines(samples)
+            sample_file.close()
+            samples = list()
+            line_count = 0
+    haplotype_file.close()
+    return len(samples)
 
 # select samples
 def select_samples(haplotypes, prefix, start, length):
