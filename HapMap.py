@@ -134,9 +134,9 @@ def trios_samples(haplotypes, prefix, length):
     samples = list()
     line_count = 0
     for line in haplotype_file:
-        line_count += 1
         if line_count < length:
             samples.append(line)
+            line_count += 1
         else:
             first_pos = int(samples[0].split()[1])
             last_pos = int(samples[len(samples)-1].split()[1])
