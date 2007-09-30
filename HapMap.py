@@ -155,14 +155,13 @@ def trios_samples(haplotypes, prefix, length):
 def select_samples(haplotypes, prefix, start, length):
     haplotype_file = gzip.open(haplotypes, 'rb')
     samples = list()
-    line_num = -1
+    line_num = 0
     for line in haplotype_file:
-        line_num += 1
-        if line_num < start:
-            continue
-        elif line_num >= (start + length):
+        if line_num >= (start + length):
             break
-        samples.append(line)
+        elif line_num >= start:
+            samples.append(line)
+        line_num += 1
     if len(samples) <= 0:
         return -1
     first_pos = int(samples[0].split()[1])
@@ -179,6 +178,30 @@ def select_samples(haplotypes, prefix, start, length):
         return (start + length)
     else:
         return -1
+
+# split samples to smaller data with larger spacing
+def split_samples(haplotypes, prefix, factor):
+    if factor < 2:
+        raise RuntimeError, 'Error factor argument in split_samples!'
+    haplotype_file = open(haplotypes, 'r')
+    samples = [[] for i in range(factor)]
+    line_num = 0
+    for line in haplotype_file:
+        samples[line_num % factor].append(line)
+        line_num += 1
+    for i in range(factor):
+        if len(samples[i]) <= 0:
+            continue
+        first_pos = int(samples[i][0].split()[1])
+        last_pos = int(samples[i][len(samples[i])-1].split()[1])
+        spacing = int((last_pos - first_pos) / len(samples[i]))
+        filename = prefix + '_' + str(len(samples[i])) + '_' + str(spacing) + '_' + \
+                str(first_pos) + '_' + str(last_pos) + '.txt'
+        print filename
+        sample_file = open(filename, 'w')
+        sample_file.writelines(samples[i])
+        sample_file.close()
+    haplotype_file.close()
 
 # convert samples file to PHASE format
 def convert_format_to_phase(samples, output):
