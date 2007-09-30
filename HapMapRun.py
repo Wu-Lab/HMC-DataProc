@@ -8,7 +8,7 @@ import glob
 import HapMap
 
 sample_dir = 'HapMap/'
-sample_name = ['1000']
+sample_names = ['1000']
 
 def get_HMC_output(source, dir):
     output = source + '.reconstructed'
@@ -75,7 +75,7 @@ for method in params.keys():
                             pipe = popen2.Popen4(cmdline)
                             pipe.wait()
                         finally:
-                            end_time = clock()
+                            end_time = time.clock()
                             message.write(str(end_time-begin_time) + '\n')
                             message.writelines(pipe.fromchild.readlines())
                             message.close()
