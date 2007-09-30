@@ -226,7 +226,7 @@ def convert_format_to_phase(samples, output):
                 for j in [0, 1]:
                     a = line[2*i+3][j]
                     haplotypes[2*i+j] += a
-                    if a != 'N':
+                    if a != '?':
                         if alleles.has_key(a):
                             alleles[a] += 1
                         else:
@@ -235,6 +235,9 @@ def convert_format_to_phase(samples, output):
             if len(alleles) <= 2:
                 allele_types += 'S'
             else:
+                print samples
+                print snp_num, alleles
+                print line
                 raise RuntimeError, 'Not bi-allelic SNP site!'
     output_file.write(str(sample_num) + '\n')
     output_file.write(str(snp_num) + '\n')
