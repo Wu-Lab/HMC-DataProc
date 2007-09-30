@@ -71,13 +71,19 @@ for method in params.keys():
                         message = open(msg_file, 'w')
                         begin_time = time.clock()
                         try:
-                            pipe = os.popen4(cmdline)[1]
-                            output = pipe.readlines()
-                            pipe.close()
+                            p_in, p_out, p_err = os.popen3(cmdline)
+                            msg_err = p_err.readlines()
+                            msg_out = p_out.readlines()
+                            p_out.close()
+                            p_err.close()
+                            p_in.close()
                         finally:
                             end_time = time.clock()
                             message.write(str(end_time-begin_time) + '\n')
-                            message.writelines(output)
+                            message.write('\nstdout:\n\n')
+                            message.writelines(msg_out)
+                            message.write('\nstderr:\n\n')
+                            message.writelines(msg_err)
                             message.close()
                         if not(p['temp'] is None):
                             temp = p['temp'](source, input_dir)
