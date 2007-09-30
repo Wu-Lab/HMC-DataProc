@@ -132,12 +132,11 @@ def trios_samples(haplotypes, prefix, length):
         raise RuntimeError, 'Error length argument in trios_samples!'
     haplotype_file = gzip.open(haplotypes, 'rb')
     samples = list()
-    line_count = 0
+    count = 0
     for line in haplotype_file:
-        if line_count < length:
-            samples.append(line)
-            line_count += 1
-        else:
+        samples.append(line)
+        count += 1
+        if count >= length:
             first_pos = int(samples[0].split()[1])
             last_pos = int(samples[len(samples)-1].split()[1])
             spacing = int((last_pos - first_pos) / len(samples))
@@ -148,7 +147,7 @@ def trios_samples(haplotypes, prefix, length):
             sample_file.writelines(samples)
             sample_file.close()
             samples = list()
-            line_count = 0
+            count = 0
     haplotype_file.close()
     return len(samples)
 
