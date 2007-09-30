@@ -71,7 +71,7 @@ for method in params.keys():
                         message = open(msg_file, 'w')
                         begin_time = time.clock()
                         try:
-                            pipe = os.popen(cmdline)
+                            pipe = os.popen4(cmdline)[1]
                             output = pipe.readlines()
                             pipe.close()
                         finally:
