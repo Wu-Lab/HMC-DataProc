@@ -19,7 +19,7 @@ populations = ['ceu', 'yri']
 
 for name in sample_names:
     for factor in split_factors:
-        split_name = name + '.' + str(factor)
+        split_name = name + '_' + str(factor)
         for chr in chromosomes:
             for pop in populations:
                 work_dir = pop.upper() + '/chr' + chr + '/'
