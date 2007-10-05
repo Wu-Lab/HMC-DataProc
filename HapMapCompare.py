@@ -55,9 +55,9 @@ for method in params.keys():
                     output = open(output_file, 'w')
                     pattern = '*_chr' + chr + '_' + pop + '_*.txt'
                     for source in glob.glob(real_dir + pattern):
-                        print source
                         data_name = source[len(real_dir):len(source)-4]
                         infer_file = infer_dir + data_name + '.out'
+                        print infer_file
                         if os.access(infer_file, os.F_OK) == False:
                             continue
                         genos_real = HapMap.read_hapmap(source)
