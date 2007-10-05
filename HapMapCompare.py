@@ -71,4 +71,4 @@ for method in params.keys():
                         for k in ['SE', 'IGP', 'IHP']:
                             result += ' ' + str(comp[k + 'raw'][0])
                             result += ' ' + str(comp[k + 'raw'][1])
-                        output_file.write(result + '\n')
+                        output.write(result + '\n')
