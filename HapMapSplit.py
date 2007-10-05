@@ -37,7 +37,7 @@ for name in sample_names:
                     prefix = split_dir + 'hapmap_chr' + chr + '_' + pop
                     HapMap.split_samples(source, prefix, factor)
                 for source in glob.iglob(split_dir + '*.txt'):
-                    basename = source[len(source_dir):len(source)-4]
+                    basename = source[len(split_dir):len(source)-4]
                     phase_file = phase_dir + basename + '.inp'
                     hpm2_file = hpm2_dir + basename + '.hpm2'
                     HapMap.convert_format_to_phase(source, phase_file)
