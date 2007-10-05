@@ -14,14 +14,17 @@ params = {'HMC':{}, 'haplorec':{}, 'PHASE':{}}
 params['HMC']['enable'] = True
 params['HMC']['output'] = 'HMC_1'
 params['HMC']['suffix'] = '.inp'
+params['HMC']['readfile'] = HapMap.read_phase
 
 params['haplorec']['enable'] = True
 params['haplorec']['output'] = 'haplorec_1'
 params['haplorec']['suffix'] = '.hpm2'
+params['haplorec']['readfile'] = HapMap.read_hpm2
 
 params['PHASE']['enable'] = False
 params['PHASE']['output'] = 'PHASE_1'
 params['PHASE']['suffix'] = '.inp'
+params['PHASE']['readfile'] = None
 
 chromosomes = list()
 for num in range(1, 23):
@@ -58,7 +61,7 @@ for method in params.keys():
                         if os.access(infer_file, os.F_OK) == False:
                             continue
                         genos_real = HapMap.read_hapmap(source)
-                        genos_infer = HapMap.read_phase(infer_file)
+                        genos_infer = p['readfile'](infer_file)
                         comp = Genotype.compare(genos_real, genos_infer)
                         result = data_name + ' ' + 'chr' + chr + ' ' + pop
                         result += ' ' + data_name.split('_')[3]
