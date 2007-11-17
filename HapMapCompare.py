@@ -72,3 +72,4 @@ for method in params.keys():
                             result += ' ' + str(comp[k + 'raw'][0])
                             result += ' ' + str(comp[k + 'raw'][1])
                         output.write(result + '\n')
+                    output.close()
