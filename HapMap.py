@@ -3,6 +3,7 @@
 # this package contains the common functions for handling HapMap data
 
 import gzip
+import random
 import Genotype
 
 # extract and infer gentoype phase from HapMap trios data
@@ -204,7 +205,7 @@ def split_samples(haplotypes, prefix, factor):
     haplotype_file.close()
 
 # convert samples file to PHASE format
-def convert_format_to_phase(samples, output):
+def convert_format_to_phase(samples, output, randomize=False):
     sample_file = open(samples, 'r')
     output_file = open(output, 'w')
     sample_num = snp_num = 0
@@ -223,9 +224,14 @@ def convert_format_to_phase(samples, output):
             positions += line[1] + ' '
             alleles = dict()
             for i in range(0, sample_num):
+                if randomize:
+                    r = random.randint(0, 1)
+                else:
+                    r = 0
+                haplotypes[2*i]   += line[2*i+3][r]
+                haplotypes[2*i+1] += line[2*i+3][1-r]
                 for j in [0, 1]:
                     a = line[2*i+3][j]
-                    haplotypes[2*i+j] += a
                     if a != '?':
                         if alleles.has_key(a):
                             alleles[a] += 1
@@ -251,7 +257,7 @@ def convert_format_to_phase(samples, output):
     sample_file.close()
 
 # convert samples file to HPM2 format
-def convert_format_to_hpm2(samples, output):
+def convert_format_to_hpm2(samples, output, randomize=False):
     sample_file = open(samples, 'r')
     output_file = open(output, 'w')
     sample_num = snp_num = 0
@@ -272,8 +278,12 @@ def convert_format_to_hpm2(samples, output):
                 raise RuntimeWarning, 'Inconsistent sample number!' + ' ' + sample_num
             allele_names += 'M' + str(snp_num) + ' '
             for i in range(0, sample_num):
-                haplotypes[2*i] += line[2*i+3][0] + ' '
-                haplotypes[2*i+1] += line[2*i+3][1] + ' '
+                if randomize:
+                    r = random.randint(0, 1)
+                else:
+                    r = 0
+                haplotypes[2*i]   += line[2*i+3][r] + ' '
+                haplotypes[2*i+1] += line[2*i+3][1-r] + ' '
     output_file.write(allele_names + '\n')
     for i in range(0, sample_num):
         output_file.write(haplotypes[2*i] + '\n')
