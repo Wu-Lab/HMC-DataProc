@@ -205,7 +205,7 @@ def split_samples(haplotypes, prefix, factor):
     haplotype_file.close()
 
 # convert samples file to PHASE format
-def convert_format_to_phase(samples, output, randomize=False):
+def convert_format_to_phase(samples, output, randomize = False):
     sample_file = open(samples, 'r')
     output_file = open(output, 'w')
     sample_num = snp_num = 0
@@ -257,7 +257,7 @@ def convert_format_to_phase(samples, output, randomize=False):
     sample_file.close()
 
 # convert samples file to HPM2 format
-def convert_format_to_hpm2(samples, output, randomize=False):
+def convert_format_to_hpm2(samples, output, randomize = False):
     sample_file = open(samples, 'r')
     output_file = open(output, 'w')
     sample_num = snp_num = 0

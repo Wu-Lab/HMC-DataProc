@@ -207,9 +207,9 @@ class Genotype:
         return diff_number
     def compare(self, other, mask = None):
         comparison = dict()
-        comparison['SE'] = self.getSwitchDistance(other)
-        diff_num_f = self.getDiffNumber(other)
-        diff_num_r = self.getDiffNumber(other.reverse())
+        comparison['SE'] = self.getSwitchDistance(other, mask)
+        diff_num_f = self.getDiffNumber(other, mask)
+        diff_num_r = self.getDiffNumber(other.reverse(), mask)
         if diff_num_f[1] != diff_num_r[1]:
             raise RuntimeWarning, 'Different possible error numbers!'
         if diff_num_f[0] < diff_num_r[0]:
