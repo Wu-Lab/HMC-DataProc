@@ -40,5 +40,5 @@ for name in sample_names:
                     basename = source[len(split_dir):len(source)-4]
                     phase_file = phase_dir + basename + '.inp'
                     hpm2_file = hpm2_dir + basename + '.hpm2'
-                    HapMap.convert_format_to_phase(source, phase_file)
-                    HapMap.convert_format_to_hpm2(source, hpm2_file)
+                    HapMap.convert_format_to_phase(source, phase_file, True)
+                    HapMap.convert_format_to_hpm2(source, hpm2_file, True)
