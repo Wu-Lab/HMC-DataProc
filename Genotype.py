@@ -2,6 +2,8 @@
 
 # this package contains the common functions for handling genotype data
 
+import random
+
 # trios_phase, phase the child's genotypes from trios
 
 def trios_phase(child, father, mother):
@@ -240,3 +242,32 @@ def compare(genos_real, genos_infer, masks = None):
         else:
             comparison[k] = 0
     return comparison
+
+class MissingMask:
+    def __init__(self, num, len, missing_rate):
+        missing = int(missing_rate * len)
+        self.masks = [None for i in range(0, num)]
+        for i in range(0, num):
+            self.masks[i] = [1 for j in range(0, len)]
+            for j in random.sample(range(0, len), missing):
+                self.masks[i][j] = 0
+    def read(self, filename):
+        mask_file = open(filename, 'r')
+        self.masks = list()
+        for line in mask_file:
+            line = line.replace(' ', '')
+            line = line.replace('\n', '')
+            line = line.replace('\t', '')
+            mask = list(line)
+            for i in range(0, len(mask)):
+                mask[i] = int(mask[i])
+            self.masks.append(mask)
+        mask_file.close()
+    def write(self, filename):
+        mask_file = open(filename, 'w')
+        for i in range(0, len(self.masks)):
+            line = ''
+            for j in range(0, len(self.masks[i])):
+                line += str(self.masks[i][j])
+            mask_file.write(line + '\n')
+        mask_file.close()
