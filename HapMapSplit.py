@@ -41,6 +41,7 @@ for name in sample_names:
                     phase_file = phase_dir + basename + '.inp'
                     hpm2_file = hpm2_dir + basename + '.hpm2'
                     if HapMap.filter_samples(source, 0.8):
+                        print source
                         msg_file = phase_dir + 'HMC_1/' + basename + '.message'
                         if os.access(msg_file, os.F_OK):
                             os.remove(msg_file)
