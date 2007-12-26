@@ -216,14 +216,17 @@ def filter_samples(filename, filter = 0.8):
             for i in range(0, len(g.status)):
                 if g.status[i] == 1:
                     snp[i][2] -= 1
-    dest_file = open(filename, 'w')
-    for i in range(0, len(snp)):
-        line = snp[i][0] + ' ' + snp[i][1] + ' ' + str(snp[i][2]) + ' '
-        for g in genos_filtered:
-            line += ' ' + g.haplos[0][i] + g.haplos[1][i] + ' ' + str(g.status[i])
-        dest_file.write(line + '\n')
-    dest_file.close()
-    return len(genos) != len(genos_filtered)
+    if len(genos) != len(genos_filtered):
+        dest_file = open(filename, 'w')
+        for i in range(0, len(snp)):
+            line = snp[i][0] + ' ' + snp[i][1] + ' ' + str(snp[i][2]) + ' '
+            for g in genos_filtered:
+                line += ' ' + g.haplos[0][i] + g.haplos[1][i] + ' ' + str(g.status[i])
+            dest_file.write(line + '\n')
+        dest_file.close()
+        return True
+    else:
+        return False
 
 # convert samples file to PHASE format
 def convert_format_to_phase(samples, output, randomize = False, mask = None):
