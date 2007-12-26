@@ -54,5 +54,5 @@ for name in sample_names:
                         msg_file = hpm2_dir + 'haplorec_2/' + basename + '.message'
                         if os.access(msg_file, os.F_OK):
                             os.remove(msg_file)
-                    HapMap.convert_format_to_phase(source, phase_file, True)
-                    HapMap.convert_format_to_hpm2(source, hpm2_file, True)
+                        HapMap.convert_format_to_phase(source, phase_file, True)
+                        HapMap.convert_format_to_hpm2(source, hpm2_file, True)
