@@ -204,6 +204,27 @@ def split_samples(haplotypes, prefix, factor):
         sample_file.close()
     haplotype_file.close()
 
+# filter samples by individual missing rate
+def filter_samples(filename, filter = 0.8):
+    snp = read_snp_info(filename)
+    genos = read_hapmap(filename)
+    genos_filtered = list()
+    for g in genos:
+        if g.status.count(1) >= len(g.status) * filter:
+            genos_filtered.append(g)
+        else:
+            for i in range(0, len(g.status)):
+                if g.status[i] == 1:
+                    snp[i][2] -= 1
+    dest_file = open(filename, 'w')
+    for i in range(0, len(snp)):
+        line = snp[i][0] + ' ' + snp[i][1] + ' ' + str(snp[i][2]) + ' '
+        for g in genos_filtered:
+            line += ' ' + g.haplos[0][i] + g.haplos[1][i] + ' ' + str(g.status[i])
+        dest_file.write(line + '\n')
+    dest_file.close()
+    return len(genos) != len(genos_filtered)
+
 # convert samples file to PHASE format
 def convert_format_to_phase(samples, output, randomize = False, mask = None):
     sample_file = open(samples, 'r')
@@ -299,7 +320,18 @@ def convert_format_to_hpm2(samples, output, randomize = False, mask = None):
     output_file.close()
     sample_file.close()
 
-#read HapMap data to Genotype class
+# read HapMap SNP information
+def read_snp_info(filename):
+    snp_info = list()
+    source_file = open(filename, 'r')
+    for line in source_file:
+        line = line.split()
+        if line[0][0] != '#':
+            snp_info.append([line[0], line[1], int(line[2])])
+    source_file.close()
+    return snp_info
+
+# read HapMap data to Genotype class
 def read_hapmap(filename):
     genos = list()
     source_file = open(filename, 'r')
@@ -318,7 +350,7 @@ def read_hapmap(filename):
     source_file.close()
     return genos
 
-#read PHASE format data to Genotype class
+# read PHASE format data to Genotype class
 def read_phase(filename):
     genos = list()
     source_file = open(filename, 'r')
@@ -336,7 +368,7 @@ def read_phase(filename):
     source_file.close()
     return genos
 
-#read HPM2 format data to Genotype class
+# read HPM2 format data to Genotype class
 def read_hpm2(filename):
     genos = list()
     source_file = open(filename, 'r')
