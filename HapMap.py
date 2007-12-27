@@ -208,9 +208,10 @@ def split_samples(haplotypes, prefix, factor):
 def filter_samples(filename, filter = 0.1):
     snp = read_snp_info(filename)
     genos = read_hapmap(filename)
+    max_missing = genos[0].len() * 2.0 * filter
     genos_filtered = list()
     for g in genos:
-        if (g.haplos[0].count('N') + g.haplos[1].count('N')) <= len(g.status) * filter:
+        if (g.haplos[0].count('N') + g.haplos[1].count('N')) <= max_missing:
             genos_filtered.append(g)
         else:
             for i in range(0, len(g.status)):
