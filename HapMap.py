@@ -97,7 +97,7 @@ def trios_filter(haplotypes, filtered, filter = [0.8, 0.8, 0.05]):
                     alleles[line[i][j]] += 1
                 else:
                     alleles[line[i][j]] = 1
-        threshold = [int(filter[0]*num), int(filter[1]*num*2), int(filter[2]*num*2)]
+        threshold = [int(filter[0]*num), int(filter[1]*num*2), int(filter[2]*non_missing)]
         if phased >= threshold[0] and non_missing >= threshold[1] and \
                 len(alleles) >= 2 and min(alleles.values()) >= threshold[2]:
             filtered_file.write(buffer)
