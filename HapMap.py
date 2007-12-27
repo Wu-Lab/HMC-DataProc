@@ -210,7 +210,7 @@ def filter_samples(filename, filter = 0.1):
     genos = read_hapmap(filename)
     genos_filtered = list()
     for g in genos:
-        if (g.haplos[0].count('N') + g.haplos[1].count('N')) >= len(g.status) * filter:
+        if (g.haplos[0].count('N') + g.haplos[1].count('N')) <= len(g.status) * filter:
             genos_filtered.append(g)
         else:
             for i in range(0, len(g.status)):
