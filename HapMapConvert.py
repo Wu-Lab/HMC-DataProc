@@ -6,7 +6,7 @@ import glob
 import HapMap
 
 sample_dir = 'HapMap/'
-sample_names = ['100', '200', '500', '1000']
+sample_names = ['1000']
 
 chromosomes = list()
 for num in range(1, 23):
@@ -31,7 +31,7 @@ for name in sample_names:
                 basename = source[len(source_dir):len(source)-4]
                 phase_file = phase_dir + basename + '.inp'
                 hpm2_file = hpm2_dir + basename + '.hpm2'
-                if HapMap.filter_samples(source, 0.8):
+                if HapMap.filter_samples(source, 0.1):
                     print source
                     msg_file = phase_dir + 'HMC_1/' + basename + '.message'
                     if os.access(msg_file, os.F_OK):
@@ -45,5 +45,5 @@ for name in sample_names:
                     msg_file = hpm2_dir + 'haplorec_2/' + basename + '.message'
                     if os.access(msg_file, os.F_OK):
                         os.remove(msg_file)
-                    HapMap.convert_format_to_phase(source, phase_file, True)
-                    HapMap.convert_format_to_hpm2(source, hpm2_file, True)
+                HapMap.convert_format_to_phase(source, phase_file, True)
+                HapMap.convert_format_to_hpm2(source, hpm2_file, True)
