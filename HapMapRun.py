@@ -21,7 +21,7 @@ def get_fastPHASE_output(source, dir):
     output = 'fastphase_hapguess_switch.out'
     return output
 
-params = {'HMC':{}, 'haplorec':{}, 'PHASE':{}}
+params = {'HMC':{}, 'haplorec':{}, 'fastPHASE':{}, 'PHASE':{}}
 
 params['HMC']['enable'] = True
 params['HMC']['command'] = 'HMC9.exe --nologo -a 0.5 -i 1'
