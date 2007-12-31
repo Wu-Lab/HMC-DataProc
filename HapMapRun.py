@@ -20,7 +20,7 @@ def get_haplorec_output(source, dir):
 params = {'HMC':{}, 'haplorec':{}, 'PHASE':{}}
 
 params['HMC']['enable'] = True
-params['HMC']['command'] = 'HMC8.exe --nologo -a 0.5 -i 1'
+params['HMC']['command'] = 'HMC9.exe --nologo -a 0.5 -i 1'
 params['HMC']['output'] = 'HMC_1'
 params['HMC']['suffix'] = '.inp'
 params['HMC']['temp'] = get_HMC_output
