@@ -39,7 +39,7 @@ params['fastPHASE']['enable'] = False
 params['fastPHASE']['command'] = 'fastPHASE.exe'
 params['fastPHASE']['output'] = 'fastPHASE_1'
 params['fastPHASE']['suffix'] = '.inp'
-params['fastPHASE']['temp'] = None
+params['fastPHASE']['temp'] = get_fastPHASE_output
 
 params['PHASE']['enable'] = False
 params['PHASE']['command'] = 'PHASE.exe'
