@@ -17,6 +17,10 @@ def get_haplorec_output(source, dir):
     output = source[len(dir):len(source)] + '.reconstructed'
     return output
 
+def get_fastPHASE_output(source, dir):
+    output = 'fastphase_hapguess_switch.out'
+    return output
+
 params = {'HMC':{}, 'haplorec':{}, 'PHASE':{}}
 
 params['HMC']['enable'] = True
@@ -30,6 +34,12 @@ params['haplorec']['command'] = 'java -Xmx1024m -Xms128m -jar HaploRec.jar -n 1'
 params['haplorec']['output'] = 'haplorec_1'
 params['haplorec']['suffix'] = '.hpm2'
 params['haplorec']['temp'] = get_haplorec_output
+
+params['fastPHASE']['enable'] = False
+params['fastPHASE']['command'] = 'fastPHASE.exe'
+params['fastPHASE']['output'] = 'fastPHASE_1'
+params['fastPHASE']['suffix'] = '.inp'
+params['fastPHASE']['temp'] = None
 
 params['PHASE']['enable'] = False
 params['PHASE']['command'] = 'PHASE.exe'
