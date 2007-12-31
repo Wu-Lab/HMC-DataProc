@@ -21,6 +21,8 @@ def get_fastPHASE_output(source, dir):
     output = 'fastphase_hapguess_switch.out'
     return output
 
+overwrite = True
+
 params = {'HMC':{}, 'haplorec':{}, 'fastPHASE':{}, 'PHASE':{}}
 
 params['HMC']['enable'] = True
@@ -72,7 +74,7 @@ for method in params.keys():
                         basename = source[len(input_dir):len(source)-len(p['suffix'])]
                         msg_file = output_dir + basename + '.message'
                         out_file = output_dir + basename + '.out'
-                        if os.access(msg_file, os.F_OK):
+                        if os.access(msg_file, os.F_OK) and !overwrite:
                             continue
                         if p['temp'] is None:
                             cmdline = p['command'] + ' ' + source + ' ' + out_file
