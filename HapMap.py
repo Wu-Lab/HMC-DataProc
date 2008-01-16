@@ -126,7 +126,32 @@ def trios_sort(haplotypes, sorted):
     haplotype_file.close()
     sorted_file.close()
     sorted_obj.close()
-    
+
+# parse HapMap phased genotypes into samples format
+def parse_phased(genotypes, legend, haplotypes, chr):
+    legend_file = gzip.open(legend, 'rb')
+    snp = list()
+    for line in legend_file:
+        line = line.split()
+        if line[0] == 'rs' or line[0][0:2] != 'rs':
+            continue
+        snp.append([line[2], line[3], line[1]])
+    legend_file.close()
+    genotypes_file = gzip.open(genotypes, 'rb')
+    genos = genotypes_file.readlines()
+    genotypes_file.close()
+    for i in range(0, len(genos)):
+        genos[i] = genos[i].split()
+    geno_num = len(genos) / 2
+    samples_file = gzip.open(haplotypes, 'wb')
+    for i in range(0, len(snp)):
+        line = chr + ' ' + snp[i][2] + ' ' + str(geno_num)
+        for j in range(0, geno_num):
+            alleles = [int(genos[2*j][i]), int(genos[2*j+1][i])]
+            line += ' ' + snp[i][alleles[0]] + snp[i][alleles[1]] + ' 1'
+        samples_file.write(line + '\n')
+    samples_file.close()
+
 # split trios data to small samples
 def trios_samples(haplotypes, prefix, length):
     if length < 1:
